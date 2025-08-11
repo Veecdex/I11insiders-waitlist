@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Waitlist</title>
+
+<!-- Use your existing Google Fonts CDN here -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        color: #fff;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background-image 1s ease-in-out;
+    }
+
+    .overlay {
+        background: rgba(0,0,0,0.55);
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: 0;
+    }
+
+    .app-container {
+        position: relative;
+        z-index: 1;
+        max-width: 420px;
+        margin: 50px auto;
+        background: rgba(20, 20, 20, 0.65);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .logo-section img {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+    .logo-name {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin: 0 0 10px 0;
+    }
+
+    .access-heading {
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 600;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .subtext {
+        font-size: 0.95rem;
+        color: #ccc;
+        margin-bottom: 20px;
+    }
+    .subtext li {
+        margin-bottom: 8px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    input, button {
+        font-family: 'Poppins', sans-serif;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+    }
+    input {
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+    }
+    input::placeholder {
+        color: #ccc;
+    }
+    button {
+        background: linear-gradient(135deg, #4A90E2, #357ABD);
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    button:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
+    .notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(20, 20, 20, 0.9);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="app-container">
+    <div class="logo-section">
+        <img src="Logo.jpeg" alt="Logo">
+        <div class="logo-name">ILLUMINATOR</div>
+    </div>
+    <h1>Be The First To Know!</h1>
+
+    <div class="access-heading">Get Exclusive Access To</div>
+    <ul class="subtext">
+        <li>Early product launches</li>
+        <li>Limited edition offers</li>
+        <li>Behind the scenes insights</li>
+    </ul>
+
+    <form id="waitlistForm">
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="email_or_phone" placeholder="Email or Phone" required>
+        <input type="text" name="offer_interest" placeholder="What offer are you most interested in?" required>
+        <button type="submit">Join Waitlist</button>
+      </form>
+      
+</div>
+<!-- Notification -->
+<div id="waitlist-notification" class="notification hidden">
+    🎉 You’ve been added to the waitlist!
+  </div>
+  
+<script>
+    // Replace with your actual image URLs
+    const backgrounds = [
+        'url("Logo.JPEG")',
+        'url("Logo.JPEG")',
+        'url("Logo.JPEG")'
+    ];
+    let current = 0;
+    function changeBackground() {
+        document.body.style.backgroundImage = backgrounds[current];
+        current = (current + 1) % backgrounds.length;
+    }
+    changeBackground();
+    setInterval(changeBackground, 5000);
+</script>
+
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("WrqRtB3JUMy3uwVXU"); // Replace with your Public Key
+  })();
+</script>
+
+<script>
+    document.getElementById("waitlistForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+    
+      emailjs.sendForm("service_iksnc8q", "template_f5svs8q", this)
+        .then(function() {
+          alert("🎉 You’ve been added to the waitlist!");
+          document.getElementById("waitlistForm").reset();
+        }, function(error) {
+          console.log("FAILED...", error);
+          alert("❌ Oops! Something went wrong. Please try again.");
+        });
+    });
+
+    
+    </script>
+    
+</body>
+</html>
